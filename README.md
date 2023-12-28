@@ -1,6 +1,6 @@
-# My Serverless Application
+# sst-prisma-trpc-example
 
-This repository contains a serverless application built with TypeScript and managed with npm and pnpm.
+This repository contains a serverless application built with TypeScript and managed with npm and pnpm. The application uses the [SST](https://sst.dev/) to manage the application infrastructure and [Prisma](https://www.prisma.io/) for database access. The application also uses [trpc](https://trpc.io/) for type-safe API calls.
 
 ## Structure
 
