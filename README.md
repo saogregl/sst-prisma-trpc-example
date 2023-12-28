@@ -18,14 +18,17 @@ To use this application, you'll need to have Node.js, npm, and pnpm installed on
 
 1. Clone the repository to your local machine.
 2. Navigate to the project directory.
+
 3. Create a .env file in the project directory with the following contents:
 
 ```
 DATABASE_URL="YOUR_DATABASE_URL_HERE"
 ```
 
-3. Run `pnpm install` to install the project dependencies.
-4. Run `pnpm sst dev` to start the application.
+5. Change the schema in `prisma/schema.prisma` to match your database schema.
+6. Run `pnpm prisma generate` to generate the Prisma client.
+7. Run `pnpm install` to install the project dependencies.
+8. Run `pnpm sst dev` to start the application.
 
 Please note that you may need to configure your AWS credentials and region before you can deploy the application.
 
