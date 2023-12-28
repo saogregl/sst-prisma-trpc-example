@@ -1,0 +1,31 @@
+{
+  "name": "my-serverless-app",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "sst dev",
+    "build": "sst build",
+    "deploy": "sst deploy",
+    "remove": "sst remove",
+    "console": "sst console",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@tsconfig/node18": "^18.2.2",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.10.5",
+    "aws-cdk-lib": "2.110.1",
+    "constructs": "10.3.0",
+    "sst": "^2.38.7",
+    "typescript": "^5.3.3"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "@prisma/client": "5.7.1",
+    "prisma": "5.7.1",
+    "fs-extra": "^11.2.0"
+  }
+}

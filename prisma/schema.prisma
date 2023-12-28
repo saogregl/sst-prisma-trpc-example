@@ -1,0 +1,220 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+  output        = "../node_modules/.prisma/client" // This should be the default, but it didn't work, so I had to specify it, I don't know why. 
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Action {
+  id           Int         @id @default(autoincrement())
+  created_at   DateTime    @default(now())
+  type         Action_type
+  payload      String
+  user_id      Int?
+  workspace_id Int?
+  project_id   Int?
+}
+
+model Asset {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  name       String
+  projectId  Int
+}
+
+model Attachment {
+  id          Int       @id @default(autoincrement())
+  created_at  DateTime? @default(now())
+  name        String?
+  description String?
+  url         String?
+}
+
+model AttachmentOnActivity {
+  id           Int       @id @default(autoincrement())
+  created_at   DateTime? @default(now())
+  attachmentId Int?
+  activityId   Int?
+}
+
+model Comment {
+  id         Int       @id @default(autoincrement())
+  created_at DateTime? @default(now())
+  created_by Int?
+  message    String?
+  finished   Boolean?
+}
+
+model CommentOnActivity {
+  id         Int       @id @default(autoincrement())
+  created_at DateTime? @default(now())
+  commentId  Int?
+  activityId Int?
+}
+
+model Notification {
+  id                Int      @id @default(autoincrement())
+  created_at        DateTime @default(now())
+  title             String
+  message           String?
+  notification_type String?
+  read              Boolean?
+  user_id           Int?
+  workspace_id      Int?
+  project_id        Int?
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  created_at  DateTime @default(now())
+  name        String
+  description String?
+  platform    String
+  order_type  String?
+  workspaceId Int
+}
+
+model ProjectActivity {
+  id          Int       @id @default(autoincrement())
+  pub_id      String
+  created_at  DateTime  @default(now())
+  projectId   Int
+  title       String
+  description String?
+  status      String
+  priority    String
+  assignedTo  Int?
+  createdBy   Int?
+  position    Int?
+  order_type  String?
+  listId      Int?
+  due_date    DateTime?
+}
+
+model ProjectEvent {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  projectId   Int
+  eventType   String
+  eventData   String?
+  description String?
+}
+
+model ProjectList {
+  id         Int      @id @default(autoincrement())
+  pub_id     String
+  created_at DateTime @default(now())
+  title      String
+  position   Int
+  projectId  Int
+}
+
+model Project_items {
+  id          Int       @id @default(autoincrement())
+  created_at  DateTime? @default(now())
+  name        String?
+  description String?
+  code        String?
+  status      String?
+  type        String?
+  project     Int
+}
+
+model SubTask {
+  id          Int       @id @default(autoincrement())
+  created_at  DateTime? @default(now())
+  description String?
+  finished    Boolean?
+}
+
+model SubTaskOnActivity {
+  id         Int       @id @default(autoincrement())
+  created_at DateTime? @default(now())
+  subTaskId  Int?
+  activityId Int?
+}
+
+model Tag {
+  id         Int       @id @default(autoincrement())
+  created_at DateTime? @default(now())
+  name       String?
+  color      String?
+}
+
+model TagOnActivity {
+  id         Int       @id @default(autoincrement())
+  created_at DateTime? @default(now())
+  tag_id     Int?
+  activityId Int?
+}
+
+model User {
+  id             Int     @id @default(autoincrement())
+  name           String?
+  email          String? @unique
+  authProviderId String?
+}
+
+model UserOnProject {
+  id         Int  @id @default(autoincrement())
+  user_id    Int?
+  project_id Int?
+}
+
+model ValidationOrders {
+  id          Int       @id @default(autoincrement())
+  created_at  DateTime? @default(now())
+  description String?
+  project_id  Int?
+  order_type  String?
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model WorkOrder {
+  id         Int       @id @default(autoincrement())
+  created_at DateTime? @default(now())
+  due_date   DateTime?
+  released   Boolean?
+  order_type String?
+}
+
+model WorkOrderItems {
+  id            Int       @id @default(autoincrement())
+  text          String?
+  created_at    DateTime? @default(now())
+  work_order_id Int?
+  document      String?
+  part          String?
+  quantity      Int?
+  created_by    String?
+  color         String?
+  status        String?
+  manufacturer  String?
+  order         String?
+  order_type    String?
+}
+
+model Workspace {
+  id          Int      @id @default(autoincrement())
+  created_at  DateTime @default(now())
+  name        String
+  description String?
+  workflow    String?
+}
+
+enum Action_type {
+  CREATE
+  UPDATE
+  DELETE
+}
